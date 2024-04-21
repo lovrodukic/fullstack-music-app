@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <script type="module">
+      import { loadHTML } from "/js/html-loader.js";
+      import { relayEvent } from "/js/relay-event.js";
+
+      window.loadHTML = loadHTML;
+      window.relayEvent = relayEvent;
+    </script>
+    <script type="module">
+      function toggleLightMode(page, checked) {
+        page.classList.toggle("light-mode", checked);
+      }
+
+      document.body.addEventListener("light-mode", (event) =>
+        toggleLightMode(event.currentTarget, event.detail.checked)
+      );
+    </script>
+  </head>
+
+  <body class="page">
+    <header>
+      <nav>
+        <a class="selected" href="index.html">Home</a>
+        <a href="registration.html">Register</a>
+        <a href="profile.html">Account</a>
+        <a href="playlists.html">Playlists</a>
+        <a
+          onclick="loadHTML(
+                '/search.html', 
+                event.target.closest('nav'))"
+          >Explore</a
+        >
+      </nav>
+      <label
+        onchange="relayEvent(event, 'light-mode',
+          {checked: event.target.checked})"
+      >
+        <input type="checkbox" autocomplete="off" />
+        Light mode
+      </label>
+      <h1>Lovro's Music App</h1>
+    </header>
+    <main>
+      <form class="login">
+        <h3>Username:</h3>
+        <input type="text" placeholder="Enter username..." />
+        <h3>Password:</h3>
+        <input type="text" placeholder="Enter password..." />
+        <button>Log in</button>
+      </form>
+      <footer>
+        <footer>Need an account? <button>Sign up</button></footer>
+      </footer>
+    </main>
+  </body>
+</html>
