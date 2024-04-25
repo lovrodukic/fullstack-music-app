@@ -126,18 +126,19 @@ li>button {
 }
 
 li>h2 {
-    word-wrap: break-word;
+    border-bottom: none;
     grid-column: span 6;
+    word-wrap: break-word;
 }
 
 li>h3 {
-    word-wrap: break-word;
     grid-column: span 4;
+    word-wrap: break-word;
 }
 
 li>h4 {
-    word-wrap: break-word;
     grid-column: span 3;
+    word-wrap: break-word;
 }
 
 main {
