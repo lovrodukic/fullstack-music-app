@@ -8,10 +8,8 @@
     <script type="module" src="/js/html-loader.js"></script>
     <script type="module">
       import { relayEvent } from "/js/relay-event.js";
-      import { loadHTML } from "/js/html-loader.js";
 
       window.relayEvent = relayEvent;
-      window.loadHTML = loadHTML;
     </script>
     <script type="module">
       function toggleLightMode(page, checked) {
@@ -27,9 +25,9 @@
   <body class="page">
     <header>
       <nav>
-        <a class="selected" href="../index.html">Home</a>
+        <a href="../index.html">Home</a>
         <a href="/html/profile.html">Account</a>
-        <a href="/html/playlists.html">Playlists</a>
+        <a class="selected" href="/html/playlists.html">Playlists</a>
       </nav>
       <drop-down>
         <form class="search">
@@ -44,26 +42,27 @@
         <input type="checkbox" autocomplete="off" />
         Light mode
       </label>
-      <h1>Lovro's Music App</h1>
+      <h1>Your Playlists</h1>
     </header>
     <main>
-      <form class="login">
-        <h3>Username:</h3>
-        <input type="text" placeholder="Enter username..." />
-        <h3>Password:</h3>
-        <input type="text" placeholder="Enter password..." />
-        <button href="/html/profile.html">Log in</button>
-      </form>
-      <footer>
-        Need an account?
-        <button
-          onclick="loadHTML(
-            '/html/registration.html', 
-            event.target.closest('body'))"
-        >
-          Click here
-        </button>
-      </footer>
+      <button>+ Create New</button>
+      <section class="playlist">
+        <ol>
+          <li>
+            <h2>Sample Playlist</h2>
+            <button id="playlistButton">&#8594;</button>
+            <script type="text/javascript">
+              document.getElementById("playlistButton").onclick = () => {
+                location.href = "/html/playlist.html";
+              };
+            </script>
+          </li>
+          <li>
+            <h2>Other Playlist</h2>
+            <button>&#8594;</button>
+          </li>
+        </ol>
+      </section>
     </main>
   </body>
 </html>

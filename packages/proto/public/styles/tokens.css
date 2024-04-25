@@ -1,9 +1,11 @@
 :root {
     /* Color */
+    --color-button: #858AE3;
+    --color-button-hover: #613DC1;
     --color-page-background: #333;
     --color-page-element: #444;
-    --color-text: #fff;
     --color-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    --color-text: #fff;
 
     /* Typography */
     --font-family-main: Tahoma, Verdana, Segoe, sans-serif;
@@ -25,6 +27,6 @@ body.light-mode {
     /* Color */
     --color-page-background: #fff;
     --color-page-element: #eee;
-    --color-text: #333;
     --color-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    --color-text: #333;
 }

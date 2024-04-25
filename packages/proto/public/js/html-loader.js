@@ -11,7 +11,7 @@ export function loadHTML(url, container) {
     .then((htmlString) => addFragment(htmlString, container))
     .catch((err) =>
       addFragment(
-        `<p class="error:> Failed to fetch ${url}: ${err} </p>`,
+        `<p class="error"> Failed to fetch ${url}: ${err} </p>`,
         container
       )
     );

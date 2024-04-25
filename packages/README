@@ -1,0 +1,14 @@
+Notes:
+
+Lab A1: Refer to Miro Concept map:
+        https://miro.com/app/board/uXjVKXGnavc=/?share_link_id=460598558420
+
+Lab A5: CSS grid display used for organizing playlists and songs in a list so
+        that it is uniformly displayed. Refer to /styles/tokens.css and
+        /styles/page.css for CSS.
+
+Lab A6: On the login page, "Click here" for creating a new account dynamically
+        loads HTML for account registration.
+
+Lab A8: Clicking on "Explore" in the navigation bar on any page prompts a
+        drop-down where a user can search for music.

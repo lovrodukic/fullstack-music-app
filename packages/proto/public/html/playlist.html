@@ -27,9 +27,9 @@
   <body class="page">
     <header>
       <nav>
-        <a class="selected" href="../index.html">Home</a>
+        <a href="../index.html">Home</a>
         <a href="/html/profile.html">Account</a>
-        <a href="/html/playlists.html">Playlists</a>
+        <a class="selected" href="/html/playlists.html">Playlists</a>
       </nav>
       <drop-down>
         <form class="search">
@@ -44,26 +44,33 @@
         <input type="checkbox" autocomplete="off" />
         Light mode
       </label>
-      <h1>Lovro's Music App</h1>
+      <h1>Sample Playlist</h1>
     </header>
     <main>
-      <form class="login">
-        <h3>Username:</h3>
-        <input type="text" placeholder="Enter username..." />
-        <h3>Password:</h3>
-        <input type="text" placeholder="Enter password..." />
-        <button href="/html/profile.html">Log in</button>
-      </form>
-      <footer>
-        Need an account?
-        <button
-          onclick="loadHTML(
-            '/html/registration.html', 
-            event.target.closest('body'))"
-        >
-          Click here
-        </button>
-      </footer>
+      <button id="playlistsButton">&#8592; Back</button>
+      <script type="text/javascript">
+        document.getElementById("playlistsButton").onclick = () => {
+          location.href = "/html/playlists.html";
+        };
+      </script>
+      <h2>Tracks</h2>
+      <ol>
+        <li>
+          <h3>Dani California</h3>
+          <h4>Red Hot Chili Peppers</h4>
+          <button>Play</button>
+        </li>
+        <li>
+          <h3>Castles Made of Sand</h3>
+          <h4>Jimi Hendrix</h4>
+          <button>Play</button>
+        </li>
+        <li>
+          <h3>Song with a Long Name to Test Word Wrap in Grid</h3>
+          <h4>Cool Band</h4>
+          <button>Play</button>
+        </li>
+      </ol>
     </main>
   </body>
 </html>
