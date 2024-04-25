@@ -1,5 +1,3 @@
-import { Hash } from "crypto";
-
 export interface Profile {
   id: string;
   userid: string;
