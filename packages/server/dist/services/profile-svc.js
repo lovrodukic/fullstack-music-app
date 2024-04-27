@@ -18,10 +18,22 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var profile_svc_exports = {};
 __export(profile_svc_exports, {
-  default: () => profile_svc_default,
-  get: () => get
+  default: () => profile_svc_default
 });
 module.exports = __toCommonJS(profile_svc_exports);
+var import_mongoose = require("mongoose");
+const ProfileSchema = new import_mongoose.Schema(
+  {
+    id: { type: String, required: true, trim: true },
+    userid: { type: String, required: true, trim: true },
+    password: { type: String, required: true, trim: true },
+    bio: String,
+    playlists: [String],
+    photo: String
+  },
+  { collection: "user_profiles" }
+);
+const ProfileModel = (0, import_mongoose.model)("Profile", ProfileSchema);
 let profiles = [
   {
     id: "lovro",
@@ -32,11 +44,16 @@ let profiles = [
     photo: "/data/images/test_profile.webp"
   }
 ];
-function get(userid) {
-  return profiles.find((profile) => profile.userid === userid);
+function index() {
+  return ProfileModel.find();
 }
-var profile_svc_default = { get };
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  get
-});
+function get(userid) {
+  return ProfileModel.find({ userid }).then((list) => list[0]).catch((err) => {
+    throw `${userid} Not Found`;
+  });
+}
+function create(profile) {
+  const p = new ProfileModel(profile);
+  return p.save();
+}
+var profile_svc_default = { index, get, create };
