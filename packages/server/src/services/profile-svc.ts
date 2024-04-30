@@ -3,8 +3,8 @@ import { Profile } from "../models/profile";
 
 const ProfileSchema = new Schema<Profile>(
   {
-    id: { type: String, required: true, trim: true },
     userid: { type: String, required: true, trim: true },
+    name: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },
     bio: String,
     playlists: [String],
@@ -18,8 +18,8 @@ const ProfileModel = model<Profile>("Profile", ProfileSchema);
 // in-memory DB
 let profiles: Array<Profile> = [
   {
-    id: "lovro",
     userid: "lovrodukic",
+    name: "Lovro Dukic",
     password: "hashedPassword",
     bio: "I like music!",
     playlists: ["Sample Playlist", "Other Playlist"],

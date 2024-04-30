@@ -1,6 +1,6 @@
 export interface Profile {
-  id: string;
   userid: string;
+  name: string;
   password: string;
   bio: string;
   playlists: Array<String>;

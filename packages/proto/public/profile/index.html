@@ -1,0 +1,28 @@
+<head>
+  <link rel="stylesheet" href="/styles/page.css" />
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/reset.css" />
+  <script type="module" src="/js/drop-down.js"></script>
+  <script type="module" src="/js/html-loader.js"></script>
+  <script type="module" src="/js/json-loader.js"></script>
+  <script type="module">
+    import { relayEvent } from "/js/relay-event.js";
+    import { loadHTML } from "/js/html-loader.js";
+
+    window.relayEvent = relayEvent;
+    window.loadHTML = loadHTML;
+  </script>
+  <script type="module">
+    function toggleLightMode(page, checked) {
+      page.classList.toggle("light-mode", checked);
+    }
+
+    document.body.addEventListener("light-mode", (event) =>
+      toggleLightMode(event.currentTarget, event.detail.checked)
+    );
+  </script>
+</head>
+
+<json-object src="/api/profiles/lovrodukic">
+  <a href="#" onclick="relayEvent(event, 'json-object:open')"> Lovro Dukic </a>
+</json-object>

@@ -24,8 +24,8 @@ module.exports = __toCommonJS(profile_svc_exports);
 var import_mongoose = require("mongoose");
 const ProfileSchema = new import_mongoose.Schema(
   {
-    id: { type: String, required: true, trim: true },
     userid: { type: String, required: true, trim: true },
+    name: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },
     bio: String,
     playlists: [String],
@@ -36,8 +36,8 @@ const ProfileSchema = new import_mongoose.Schema(
 const ProfileModel = (0, import_mongoose.model)("Profile", ProfileSchema);
 let profiles = [
   {
-    id: "lovro",
     userid: "lovrodukic",
+    name: "Lovro Dukic",
     password: "hashedPassword",
     bio: "I like music!",
     playlists: ["Sample Playlist", "Other Playlist"],
