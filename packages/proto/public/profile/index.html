@@ -1,28 +1,78 @@
-<head>
-  <link rel="stylesheet" href="/styles/page.css" />
-  <link rel="stylesheet" href="/styles/tokens.css" />
-  <link rel="stylesheet" href="/styles/reset.css" />
-  <script type="module" src="/js/drop-down.js"></script>
-  <script type="module" src="/js/html-loader.js"></script>
-  <script type="module" src="/js/json-loader.js"></script>
-  <script type="module">
-    import { relayEvent } from "/js/relay-event.js";
-    import { loadHTML } from "/js/html-loader.js";
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/styles/page.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <script type="module" src="/js/drop-down.js"></script>
+    <script type="module" src="/js/html-loader.js"></script>
+    <script type="module" src="/js/json-loader.js"></script>
+    <script type="module" src="/js/restful-form.js"></script>
+    <script type="module" src="/js/input-array.js"></script>
+    <script type="module">
+      import { relayEvent } from "/js/relay-event.js";
+      import { loadHTML } from "/js/html-loader.js";
 
-    window.relayEvent = relayEvent;
-    window.loadHTML = loadHTML;
-  </script>
-  <script type="module">
-    function toggleLightMode(page, checked) {
-      page.classList.toggle("light-mode", checked);
-    }
+      window.relayEvent = relayEvent;
+      window.loadHTML = loadHTML;
+    </script>
+    <script type="module">
+      function toggleLightMode(page, checked) {
+        page.classList.toggle("light-mode", checked);
+      }
 
-    document.body.addEventListener("light-mode", (event) =>
-      toggleLightMode(event.currentTarget, event.detail.checked)
-    );
-  </script>
-</head>
+      document.body.addEventListener("light-mode", (event) =>
+        toggleLightMode(event.currentTarget, event.detail.checked)
+      );
+    </script>
+  </head>
 
-<json-object src="/api/profiles/lovrodukic">
-  <a href="#" onclick="relayEvent(event, 'json-object:open')"> Lovro Dukic </a>
-</json-object>
+  <body class="page">
+    <main>
+      <restful-form slot="form" src="/api/profiles/lovrodukic">
+        <form autocomplete="off">
+          <label>
+            <span>Username</span>
+            <input name="userid" />
+          </label>
+          <label>
+            <span>Name</span>
+            <input name="name" />
+          </label>
+          <label>
+            <span>Password</span>
+            <input tye="password" name="password" />
+          </label>
+          <label>
+            <span>Bio</span>
+            <input name="bio" />
+          </label>
+          <label>
+            <span>Playlists</span>
+            <input-array name="playlists">
+              <span
+                slot="label-add"
+                onclick="relayEvent(event, 'input-array:add')"
+              >
+                Add Playlist
+              </span>
+            </input-array>
+          </label>
+          <label>
+            <span>Photo</span>
+            <input name="photo" />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+        <button onclick="relayEvent(event, 'restful-form:delete')">
+          Delete this Profile
+        </button>
+      </restful-form>
+      <json-object src="/api/profiles/lovrodukic">
+        <a href="#" onclick="relayEvent(event, 'json-object:open')">
+          Lovro Dukic
+        </a>
+      </json-object>
+    </main>
+  </body>
+</html>

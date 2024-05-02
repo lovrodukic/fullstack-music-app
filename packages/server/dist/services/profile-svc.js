@@ -34,16 +34,6 @@ const ProfileSchema = new import_mongoose.Schema(
   { collection: "user_profiles" }
 );
 const ProfileModel = (0, import_mongoose.model)("Profile", ProfileSchema);
-let profiles = [
-  {
-    userid: "lovrodukic",
-    name: "Lovro Dukic",
-    password: "hashedPassword",
-    bio: "I like music!",
-    playlists: ["Sample Playlist", "Other Playlist"],
-    photo: "/data/images/test_profile.webp"
-  }
-];
 function index() {
   return ProfileModel.find();
 }
@@ -56,4 +46,21 @@ function create(profile) {
   const p = new ProfileModel(profile);
   return p.save();
 }
-var profile_svc_default = { index, get, create };
+function update(userid, profile) {
+  return ProfileModel.findOne({ userid }).then((found) => {
+    if (!found)
+      throw `${userid} Not Found`;
+    else
+      return ProfileModel.findByIdAndUpdate(
+        found._id,
+        profile,
+        { new: true }
+      );
+  }).then((updated) => {
+    if (!updated)
+      throw `${userid} not updated`;
+    else
+      return updated;
+  });
+}
+var profile_svc_default = { index, get, create, update };

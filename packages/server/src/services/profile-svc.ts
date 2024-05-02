@@ -15,18 +15,6 @@ const ProfileSchema = new Schema<Profile>(
 
 const ProfileModel = model<Profile>("Profile", ProfileSchema);
 
-// in-memory DB
-let profiles: Array<Profile> = [
-  {
-    userid: "lovrodukic",
-    name: "Lovro Dukic",
-    password: "hashedPassword",
-    bio: "I like music!",
-    playlists: ["Sample Playlist", "Other Playlist"],
-    photo: "/data/images/test_profile.webp"
-  }
-];
-
 function index(): Promise<Profile[]> {
   return ProfileModel.find();
 }
@@ -44,4 +32,20 @@ function create(profile: Profile): Promise<Profile> {
   return p.save();
 }
 
-export default { index, get, create };
+function update(userid: String, profile: Profile): Promise<Profile> {
+  return ProfileModel.findOne({ userid })
+    .then((found) => {
+      if (!found) throw `${userid} Not Found`;
+      else
+        return ProfileModel.findByIdAndUpdate(
+          found._id,
+          profile,
+          { new: true }
+        );
+    }).then((updated) => {
+      if (!updated) throw `${userid} not updated`;
+      else return updated as Profile;
+    });
+}
+
+export default { index, get, create, update };
