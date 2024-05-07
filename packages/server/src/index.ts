@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import auth, { authenticateUser } from "./routes/auth";
 import profile from "./routes/profiles";
 import { connect } from "./services/mongo";
 
@@ -10,7 +11,8 @@ connect("Cluster0");
 
 app.use(express.static(staticDir));
 app.use(express.json());
-app.use("/api/profiles", profile);
+app.use("/api/auth", auth);
+app.use("/api/profiles", authenticateUser, profile);
 
 app.get("/hello", (req: Request, res: Response) => {
   res.send("Hello, World");

@@ -42,7 +42,8 @@ function update(userid: String, profile: Profile): Promise<Profile> {
           profile,
           { new: true }
         );
-    }).then((updated) => {
+    })
+    .then((updated) => {
       if (!updated) throw `${userid} not updated`;
       else return updated as Profile;
     });
