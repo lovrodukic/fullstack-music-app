@@ -1,0 +1,9 @@
+Notes:
+
+Lab B5: The profile view works but the edit button is not fully implemented.
+
+Lab B7: Use http://localhost:3000/login.html?next=./profile/ to test the login
+        page. You can the username "test" and password "test" to login as my
+        dummy test user. I know the data display looks ugly, but I present a
+        proof-of-concept of dynamically loading in user data after
+        authentication.

@@ -4,12 +4,25 @@
     <link rel="stylesheet" href="/styles/page.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/reset.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "@calpoly/mustang": "/node_modules/@calpoly/mustang/dist/mustang.mjs"
+        }
+      }
+    </script>
+    <script type="module">
+      import { define, Auth } from "@calpoly/mustang";
+
+      define({ "mu-auth": Auth.Provider });
+    </script>
     <script type="module" src="/js/drop-down.js"></script>
     <script type="module" src="/js/html-loader.js"></script>
     <script type="module" src="/js/json-loader.js"></script>
     <script type="module" src="/js/restful-form.js"></script>
     <script type="module" src="/js/input-array.js"></script>
     <script type="module" src="/js/profile-view.js"></script>
+    <script type="module" src="/js/page-header.js"></script>
     <script type="module">
       import { relayEvent } from "/js/relay-event.js";
       import { loadHTML } from "/js/html-loader.js";
@@ -29,8 +42,14 @@
   </head>
 
   <body class="page">
-    <main>
-      <profile-view>
+    <mu-auth provides="page:auth" redirect="../login.html">
+      <page-header></page-header>
+      <main>
+        <profile-view src="/api/profiles/test"></profile-view>
+      </main>
+    </mu-auth>
+    <!-- <main> -->
+    <!-- <profile-view>
         <span slot="userid">lovrodukic</span>
         <span slot="name">Lovro Dukic</span>
         <span slot="password">hashedPassword</span>
@@ -39,11 +58,11 @@
           <li>Sample Playlist</li>
           <li>Other Playlist</li>
         </ul>
-        <profile-avatar slot="photo" src="../images/test_profile.webp">
+        <profile-avatar slot="avatar" src="../images/test_profile.webp">
         </profile-avatar>
-      </profile-view>
+      </profile-view> -->
 
-      <restful-form slot="form" src="/api/profiles/lovrodukic">
+    <!-- <restful-form slot="form" src="/api/profiles/lovrodukic">
         <form autocomplete="off">
           <label>
             <span>Username</span>
@@ -73,20 +92,20 @@
             </input-array>
           </label>
           <label>
-            <span>Photo</span>
-            <input name="photo" />
+            <span>avatar</span>
+            <input name="avatar" />
           </label>
           <button type="submit">Submit</button>
         </form>
         <button onclick="relayEvent(event, 'restful-form:delete')">
           Delete this Profile
         </button>
-      </restful-form>
-      <json-object src="/api/profiles/lovrodukic">
+      </restful-form> -->
+    <!-- <json-object src="/api/profiles/lovrodukic">
         <a href="#" onclick="relayEvent(event, 'json-object:open')">
           Lovro Dukic
         </a>
-      </json-object>
-    </main>
+      </json-object> -->
+    <!-- </main> -->
   </body>
 </html>

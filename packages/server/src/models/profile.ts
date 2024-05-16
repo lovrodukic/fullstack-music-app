@@ -4,5 +4,5 @@ export interface Profile {
   password: string;
   bio: string;
   playlists: Array<String>;
-  photo: string | undefined;
+  avatar: string | undefined;
 }

@@ -8,7 +8,7 @@ const ProfileSchema = new Schema<Profile>(
     password: { type: String, required: true, trim: true },
     bio: String,
     playlists: [String],
-    photo: String
+    avatar: String
   },
   { collection: "user_profiles" }
 );

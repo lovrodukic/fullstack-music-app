@@ -22,6 +22,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var import_express = __toESM(require("express"));
+var import_path = __toESM(require("path"));
 var import_auth = __toESM(require("./routes/auth"));
 var import_profiles = __toESM(require("./routes/profiles"));
 var import_mongo = require("./services/mongo");
@@ -30,8 +31,14 @@ const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
 (0, import_mongo.connect)("Cluster0");
 app.use(import_express.default.static(staticDir));
+const nodeModules = import_path.default.resolve(
+  __dirname,
+  "../../../node_modules"
+);
+console.log("Serving NPM packages from", nodeModules);
+app.use("/node_modules", import_express.default.static(nodeModules));
 app.use(import_express.default.json());
-app.use("/api/auth", import_auth.default);
+app.use("/auth", import_auth.default);
 app.use("/api/profiles", import_auth.authenticateUser, import_profiles.default);
 app.get("/hello", (req, res) => {
   res.send("Hello, World");

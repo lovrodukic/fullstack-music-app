@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import path from "path";
 import auth, { authenticateUser } from "./routes/auth";
 import profile from "./routes/profiles";
 import { connect } from "./services/mongo";
@@ -10,8 +11,14 @@ const staticDir = process.env.STATIC || "public";
 connect("Cluster0");
 
 app.use(express.static(staticDir));
+const nodeModules = path.resolve(
+  __dirname,
+  "../../../node_modules"
+);
+console.log("Serving NPM packages from", nodeModules);
+app.use("/node_modules", express.static(nodeModules));
 app.use(express.json());
-app.use("/api/auth", auth);
+app.use("/auth", auth);
 app.use("/api/profiles", authenticateUser, profile);
 
 app.get("/hello", (req: Request, res: Response) => {
