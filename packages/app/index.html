@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/public/styles/page.css" />
+    <link rel="stylesheet" href="/public/styles/tokens.css" />
+    <link rel="stylesheet" href="/public/styles/reset.css" />
+    <script type="module" src="/src/main"></script>
+    <script type="module">
+      function toggleLightMode(page, checked) {
+        page.classList.toggle("light-mode", checked);
+      }
+
+      document.body.addEventListener("light-mode", (event) =>
+        toggleLightMode(event.currentTarget, event.detail.checked)
+      );
+    </script>
+  </head>
+
+  <body>
+    <mu-auth provides="page:auth">
+      <article class="page">
+        <page-header></page-header>
+      </article>
+    </mu-auth>
+  </body>
+</html>

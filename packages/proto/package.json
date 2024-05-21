@@ -1,16 +1,16 @@
 {
-    "name": "proto",
-    "version": "1.0.0",
-    "main": "public/index.html",
-    "scripts": {
-        "start": "http-server",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC",
-    "description": "",
-    "dependencies": {
-        "@calpoly/mustang": "^0.1.0",
-        "http-server": "^14.1.1"
-    }
+  "name": "proto",
+  "version": "1.0.0",
+  "main": "public/index.html",
+  "scripts": {
+    "start": "http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@calpoly/mustang": "^0.1.7",
+    "http-server": "^14.1.1"
+  }
 }
