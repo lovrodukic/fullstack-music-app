@@ -1,14 +1,22 @@
-import { Auth, Observer, Events } from "@calpoly/mustang";
+import { define, Auth, Observer, Events, DropdownElement } from "@calpoly/mustang";
 import { LitElement, css, html } from "lit";
+import { property } from "lit/decorators.js";
 
 export class PageHeaderElement extends LitElement {
+  static uses = define({
+    "drop-down": DropdownElement
+  });
+
+  @property()
+  username = "anonymous";
+
   render() {
     return html`
       <header>
         <h1>My App</h1>
         <drop-down>
           <a href="#" slot="actuator">
-            <slot name="greeting">Hello, user</slot></a>
+            <slot name="greeting">Hello, ${this.username}</slot></a>
           <ul>
             <li>
               <label @change=${toggleLightMode}>
@@ -18,10 +26,7 @@ export class PageHeaderElement extends LitElement {
             </li>
             <li>
               <a
-                href="#"
-                onclick="relayEvent(event, 'auth:message', ['auth/signout'])"
-                >Sign out</a
-              >
+                href="#" @click=${signOutUser}>Sign out</a>
             </li>
           </ul>
         </drop-down>
@@ -66,6 +71,15 @@ export class PageHeaderElement extends LitElement {
     this,
     "page:auth"
   );
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._authObserver.observe(({ user }) => {
+      if (user) {
+        this.username = user.username;
+      }
+    });
+  }
 }
 
 type Checkbox = HTMLInputElement & { checked: boolean; };
@@ -77,3 +91,6 @@ function toggleLightMode(ev: InputEvent) {
   Events.relay(ev, "light-mode", { checked });
 }
 
+function signOutUser(ev: Event) {
+  Events.relay(ev, "auth:message", ["auth/signout"]);
+}
