@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import path from "path";
 import auth, { authenticateUser } from "./routes/auth";
 import profile from "./routes/profiles";
+import songs from "./routes/songs";
+import playlists from "./routes/playlists";
 import { connect } from "./services/mongo";
 
 const app = express();
@@ -20,6 +22,8 @@ app.use("/node_modules", express.static(nodeModules));
 app.use(express.json());
 app.use("/auth", auth);
 app.use("/api/profiles", authenticateUser, profile);
+app.use("/api/songs", authenticateUser, songs);
+app.use("/api/playlists", authenticateUser, playlists);
 
 app.get("/hello", (req: Request, res: Response) => {
   res.send("Hello, World");

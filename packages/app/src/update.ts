@@ -1,6 +1,6 @@
 import { Auth, Update } from "@calpoly/mustang";
 // @ts-ignore
-import { Profile } from "server/models";
+import { Profile, Playlist } from "server/models";
 import { Msg } from "./messages";
 import { Model } from "./model";
 
@@ -20,7 +20,11 @@ export default function update(
         apply((model) => ({ ...model, profile }))
       );
       break;
-    // put the rest of your cases here
+    case "playlist/select":
+      selectPlaylist(message[1], user).then((playlist) =>
+        apply((model) => ({ ...model, playlist }))
+      );
+      break;
     default:
       const unhandled: never = message[0];
       throw new Error(`Unhandled Auth message "${unhandled}"`);
@@ -69,6 +73,27 @@ function selectProfile(
       if (json) {
         console.log("Profile:", json);
         return json as Profile;
+      }
+    });
+}
+
+function selectPlaylist(
+  msg: { playlistid: string; },
+  user: Auth.User
+) {
+  return fetch(`/api/playlists/${msg.playlistid}`, {
+    headers: Auth.headers(user)
+  })
+    .then((response: Response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      return undefined;
+    })
+    .then((json: unknown) => {
+      if (json) {
+        console.log("Playlist:", json);
+        return json as Playlist;
       }
     });
 }

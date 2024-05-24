@@ -1,8 +1,9 @@
+import { Playlist } from "./playlists";
+
 export interface Profile {
   userid: string;
   name: string;
-  password: string;
   bio: string;
-  playlists: Array<String>;
+  playlists: Array<string>;
   avatar: string | undefined;
 }

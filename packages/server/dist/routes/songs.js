@@ -5,6 +5,10 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -21,32 +25,25 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var songs_exports = {};
+__export(songs_exports, {
+  default: () => songs_default
+});
+module.exports = __toCommonJS(songs_exports);
 var import_express = __toESM(require("express"));
-var import_path = __toESM(require("path"));
-var import_auth = __toESM(require("./routes/auth"));
-var import_profiles = __toESM(require("./routes/profiles"));
-var import_songs = __toESM(require("./routes/songs"));
-var import_playlists = __toESM(require("./routes/playlists"));
-var import_mongo = require("./services/mongo");
-const app = (0, import_express.default)();
-const port = process.env.PORT || 3e3;
-const staticDir = process.env.STATIC || "public";
-(0, import_mongo.connect)("Cluster0");
-app.use(import_express.default.static(staticDir));
-const nodeModules = import_path.default.resolve(
-  __dirname,
-  "../../../node_modules"
-);
-console.log("Serving NPM packages from", nodeModules);
-app.use("/node_modules", import_express.default.static(nodeModules));
-app.use(import_express.default.json());
-app.use("/auth", import_auth.default);
-app.use("/api/profiles", import_auth.authenticateUser, import_profiles.default);
-app.use("/api/songs", import_auth.authenticateUser, import_songs.default);
-app.use("/api/playlists", import_auth.authenticateUser, import_playlists.default);
-app.get("/hello", (req, res) => {
-  res.send("Hello, World");
+var import_song_svc = __toESM(require("../services/song-svc"));
+const router = import_express.default.Router();
+router.get("/", (req, res) => {
+  import_song_svc.default.index().then((list) => res.json(list)).catch((err) => res.status(500).send(err));
 });
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+router.get("/:title/:artist", (req, res) => {
+  const { title, artist } = req.params;
+  import_song_svc.default.get(title, artist).then((song) => {
+    if (!song)
+      throw "Not found";
+    else
+      res.json(song);
+  }).catch((err) => res.status(404).end());
 });
+var songs_default = router;

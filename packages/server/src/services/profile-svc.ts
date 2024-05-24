@@ -1,11 +1,10 @@
-import { Schema, Model, Document, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { Profile } from "../models/profile";
 
 const ProfileSchema = new Schema<Profile>(
   {
     userid: { type: String, required: true, trim: true },
     name: { type: String, required: true, trim: true },
-    password: { type: String, required: true, trim: true },
     bio: String,
     playlists: [String],
     avatar: String

@@ -2,11 +2,11 @@ import { define, View } from "@calpoly/mustang";
 import { css, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 // @ts-ignore
-import { Profile } from "server/models";
+import { Playlist } from "server/models";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
-class ProfileViewer extends LitElement {
+class PlaylistViewer extends LitElement {
   static styles = css`
     :host {
       --display-new-button: inline-block;
@@ -101,79 +101,27 @@ class ProfileViewer extends LitElement {
   render() {
     return html`
       <section>
-        <slot name="avatar"></slot>
-        <h1><slot name="name"></slot></h1>
-        <nav>
-          <button class="new">New…</button>
-          <button class="edit">Edit</button>
-          <button class="close">Close</button>
-          <button class="delete">Delete</button>
-        </nav>
+        <h2><slot name="playlistid"></slot></h2>
         <dl>
-          <dt>Bio</dt>
-          <dd><slot name="bio"></slot></dd>
-          <dt>Playlists</dt>
-          <dd><slot name="playlists"></slot></dd>
+          <dt>Songs</dt>
+          <dd><slot name="songs"></slot></dd>
         </dl>
-        <a href="/app/playlist/Test Playlist">click</a>
       </section>
     `;
   }
 }
 
-class ProfileAvatarElement extends LitElement {
-  @property()
-  src?: string;
-
-  render() {
-    return html`
-      <div
-        class="avatar"
-        style="
-        ${this.src
-        ? `background-image: url('${this.src}');`
-        : ""}
-      "></div>
-    `;
-  }
-
-  static styles = css`
-    :host {
-      display: contents;
-      --avatar-backgroundColor: var(--color-accent);
-      --avatar-size: 100px;
-    }
-    .avatar {
-      grid-column: key;
-      justify-self: end;
-      position: relative;
-      width: var(--avatar-size);
-      aspect-ratio: 1;
-      background-color: var(--avatar-backgroundColor);
-      background-size: cover;
-      border-radius: 50%;
-      text-align: center;
-      line-height: var(--avatar-size);
-      font-size: calc(0.66 * var(--avatar-size));
-      font-family: var(--font-family-display);
-      color: var(--color-link-inverted);
-      overflow: hidden;
-    }
-  `;
-}
-
-export class ProfileViewElement extends View<Model, Msg> {
+export class PlaylistViewElement extends View<Model, Msg> {
   static uses = define({
-    "profile-viewer": ProfileViewer,
-    "profile-avatar": ProfileAvatarElement
+    "playlist-viewer": PlaylistViewer,
   });
 
-  @property({ attribute: "user-id", reflect: true })
-  userid = "";
+  @property({ attribute: "playlist-id", reflect: true })
+  playlistid = "";
 
   @property()
-  get profile(): Profile | undefined {
-    return this.model.profile;
+  get playlist(): Playlist | undefined {
+    return this.model.playlist;
   }
 
   constructor() {
@@ -181,48 +129,46 @@ export class ProfileViewElement extends View<Model, Msg> {
   }
 
   attributeChangedCallback(
-    name: string,
+    playlistid: string,
     oldValue: string,
     newValue: string
   ) {
-    super.attributeChangedCallback(name, oldValue, newValue);
+    super.attributeChangedCallback(playlistid, oldValue, newValue);
     if (
-      name === "user-id" &&
+      playlistid === "playlist-id" &&
       oldValue !== newValue &&
       newValue
     ) {
-      console.log("Profile Page:", newValue);
+      console.log("Playlist Page:", newValue);
       this.dispatchMessage([
-        "profile/select",
-        { userid: newValue }
+        "playlist/select",
+        { playlistid: newValue }
       ]);
     }
   }
 
   render() {
     const {
-      avatar,
-      name,
-      bio,
-      playlists = []
-    } = this.profile || {};
+      playlistid,
+      songs = []
+    } = this.playlist || {};
 
-    const playlists_html = playlists.map(
+    console.log(songs);
+
+    const songs_html = songs.map(
       (s: any) =>
         html`
-          <li>${s}</li>
+          <li>${s.title} ${s.artist}</li>
         `
     );
 
     return html`
-      <profile-viewer>
-        <profile-avatar slot="avatar" src=${avatar}></profile-avatar>
-        <span slot="name">${name}</span>
-        <span slot="bio">${bio}</span>
-        <ul slot="playlists">
-          ${playlists_html}
+      <playlist-viewer>
+        <span slot="playlistid">${playlistid}</span>
+        <ul slot="songs">
+          ${songs_html}
         </ul>
-      </profile-viewer>
+      </playlist-viewer>
     `;
   }
 }

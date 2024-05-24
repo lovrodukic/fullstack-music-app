@@ -26,7 +26,6 @@ const ProfileSchema = new import_mongoose.Schema(
   {
     userid: { type: String, required: true, trim: true },
     name: { type: String, required: true, trim: true },
-    password: { type: String, required: true, trim: true },
     bio: String,
     playlists: [String],
     avatar: String

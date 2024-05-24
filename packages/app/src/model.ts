@@ -1,8 +1,9 @@
 // @ts-ignore
-import { Profile } from "server/models";
+import { Profile, Playlist } from "server/models";
 
 export interface Model {
   profile?: Profile;
+  playlist?: Playlist;
 }
 
 export const init: Model = {};
