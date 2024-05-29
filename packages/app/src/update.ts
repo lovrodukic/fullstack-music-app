@@ -78,10 +78,10 @@ function selectProfile(
 }
 
 function selectPlaylist(
-  msg: { playlistid: string; },
+  msg: { playlistid: string; ownerid: string; },
   user: Auth.User
 ) {
-  return fetch(`/api/playlists/${msg.playlistid}`, {
+  return fetch(`/api/playlists/${msg.playlistid}/${msg.ownerid}`, {
     headers: Auth.headers(user)
   })
     .then((response: Response) => {

@@ -1,5 +1,3 @@
-import { Playlist } from "./playlists";
-
 export interface Profile {
   userid: string;
   name: string;

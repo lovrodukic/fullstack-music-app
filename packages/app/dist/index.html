@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script type="module" crossorigin src="/assets/index-CqAYSK5D.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-fIiVKMA1.css">
+  <head>
+    <script>
+      function toggleLightMode(page, checked) {
+        page.classList.toggle("light-mode", checked);
+      }
+
+      document.body.addEventListener("light-mode", (event) =>
+        toggleLightMode(event.currentTarget, event.detail.checked)
+      );
+    </script>
+    <script type="module" crossorigin src="/assets/spa-x8AqkRmz.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/lit-element-C29doGuC.js">
+    <link rel="stylesheet" crossorigin href="/assets/spa-fIiVKMA1.css">
   </head>
 
   <body>
-    <mu-auth provides="page:auth">
-      <article class="page">
-        <page-header></page-header>
-      </article>
-    </mu-auth>
+    <mu-history provides="page:history">
+      <mu-auth provides="page:auth" redirect="./login.html">
+        <mu-store provides="page:model">
+          <article class="page">
+            <page-header></page-header>
+            <mu-switch></mu-switch>
+          </article>
+        </mu-store>
+      </mu-auth>
+    </mu-history>
   </body>
 </html>

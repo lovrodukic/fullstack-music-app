@@ -115,7 +115,7 @@ class ProfileViewer extends LitElement {
           <dt>Playlists</dt>
           <dd><slot name="playlists"></slot></dd>
         </dl>
-        <a href="/app/playlist/Test Playlist">click</a>
+        <!-- <a href="/app/playlist/Test Playlist/test">click</a> -->
       </section>
     `;
   }

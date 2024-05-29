@@ -15,9 +15,10 @@ const routes = [
     `
   },
   {
-    path: "/app/playlist/:id",
+    path: "/app/playlist/:id/:owner",
     view: (params: Switch.Params) => html`
-      <playlist-view playlist-id=${params.id}></playlist-view>
+      <playlist-view playlist-id=${params.id} owner-id=${params.owner}>
+      </playlist-view>
     `
   },
   {

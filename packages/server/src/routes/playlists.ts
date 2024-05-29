@@ -11,11 +11,11 @@ router.get("/", (req: Request, res: Response) => {
     .catch((err) => res.status(500).send(err));
 });
 
-router.get("/:id", (req: Request, res: Response) => {
-  const { id } = req.params;
+router.get("/:id/:owner", (req: Request, res: Response) => {
+  const { id, owner } = req.params;
 
   playlists
-    .get(id)
+    .get(id, owner)
     .then((playlist: Playlist | undefined) => {
       if (!playlist) throw "Not found";
       else res.json(playlist);

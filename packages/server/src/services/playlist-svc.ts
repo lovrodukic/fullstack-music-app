@@ -25,11 +25,21 @@ function index(): Promise<Playlist[]> {
   return PlaylistModel.find();
 }
 
-function get(playlistid: String): Promise<Playlist> {
-  return PlaylistModel.find({ playlistid })
-    .then((list) => list[0])
+function get(playlistid: String, ownerid: String): Promise<Playlist> {
+  // return PlaylistModel.find({ playlistid, ownerid })
+  //   .then((list) => list[0])
+  //   .catch((err) => {
+  //     throw `Playlist "${playlistid} by ${ownerid}" Not Found`;
+  //   });
+  return PlaylistModel.findOne({ playlistid: playlistid, owner: ownerid })
+    .then((playlist) => {
+      if (!playlist) {
+        throw new Error(`Playlist "${playlistid}" Not Found`);
+      }
+      return playlist;
+    })
     .catch((err) => {
-      throw `Playlist "${playlistid}" Not Found`;
+      throw err; // Ensure that the error is propagated correctly
     });
 }
 

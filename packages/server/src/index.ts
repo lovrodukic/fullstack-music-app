@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import fs from "node:fs/promises";
 import path from "path";
 import auth, { authenticateUser } from "./routes/auth";
 import profile from "./routes/profiles";
@@ -29,6 +30,15 @@ app.get("/hello", (req: Request, res: Response) => {
   res.send("Hello, World");
 });
 
+// SPA Routes
+app.use("/app", (req: Request, res: Response) => {
+  const indexHtml = path.resolve(staticDir, "index.html");
+  fs.readFile(indexHtml, { encoding: "utf8" }).then((html) =>
+    res.send(html)
+  );
+});
+
+// Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

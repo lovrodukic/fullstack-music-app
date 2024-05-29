@@ -37,9 +37,9 @@ const router = import_express.default.Router();
 router.get("/", (req, res) => {
   import_playlist_svc.default.index().then((list) => res.json(list)).catch((err) => res.status(500).send(err));
 });
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  import_playlist_svc.default.get(id).then((playlist) => {
+router.get("/:id/:owner", (req, res) => {
+  const { id, owner } = req.params;
+  import_playlist_svc.default.get(id, owner).then((playlist) => {
     if (!playlist)
       throw "Not found";
     else

@@ -43,9 +43,14 @@ const PlaylistModel = (0, import_mongoose.model)(
 function index() {
   return PlaylistModel.find();
 }
-function get(playlistid) {
-  return PlaylistModel.find({ playlistid }).then((list) => list[0]).catch((err) => {
-    throw `Playlist "${playlistid}" Not Found`;
+function get(playlistid, ownerid) {
+  return PlaylistModel.findOne({ playlistid, owner: ownerid }).then((playlist) => {
+    if (!playlist) {
+      throw new Error(`Playlist "${playlistid}" Not Found`);
+    }
+    return playlist;
+  }).catch((err) => {
+    throw err;
   });
 }
 var playlist_svc_default = {

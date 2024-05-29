@@ -119,6 +119,9 @@ export class PlaylistViewElement extends View<Model, Msg> {
   @property({ attribute: "playlist-id", reflect: true })
   playlistid = "";
 
+  @property({ attribute: "owner-id", reflect: true })
+  ownerid = "";
+
   @property()
   get playlist(): Playlist | undefined {
     return this.model.playlist;
@@ -129,20 +132,30 @@ export class PlaylistViewElement extends View<Model, Msg> {
   }
 
   attributeChangedCallback(
-    playlistid: string,
+    attributeName: string,
     oldValue: string,
     newValue: string
   ) {
-    super.attributeChangedCallback(playlistid, oldValue, newValue);
+    super.attributeChangedCallback(attributeName, oldValue, newValue);
     if (
-      playlistid === "playlist-id" &&
+      attributeName === "playlist-id" &&
       oldValue !== newValue &&
       newValue
     ) {
       console.log("Playlist Page:", newValue);
       this.dispatchMessage([
         "playlist/select",
-        { playlistid: newValue }
+        { playlistid: newValue, ownerid: this.ownerid }
+      ]);
+    } else if (
+      attributeName === "owner-id" &&
+      oldValue !== newValue &&
+      newValue
+    ) {
+      console.log("Playlist Page:", newValue);
+      this.dispatchMessage([
+        "playlist/select",
+        { playlistid: this.playlistid, ownerid: newValue }
       ]);
     }
   }
