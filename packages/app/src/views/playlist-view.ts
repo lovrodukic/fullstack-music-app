@@ -1,8 +1,9 @@
 import { define, View } from "@calpoly/mustang";
 import { css, html, LitElement } from "lit";
-import { property } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
 // @ts-ignore
 import { Playlist } from "server/models";
+import { ArtistFilter } from "../components/artist-filter";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
@@ -114,6 +115,7 @@ class PlaylistViewer extends LitElement {
 export class PlaylistViewElement extends View<Model, Msg> {
   static uses = define({
     "playlist-viewer": PlaylistViewer,
+    "artist-filter": ArtistFilter
   });
 
   @property({ attribute: "playlist-id", reflect: true })
@@ -127,8 +129,17 @@ export class PlaylistViewElement extends View<Model, Msg> {
     return this.model.playlist;
   }
 
+  @state()
+  selectedArtist: String | undefined;
+
   constructor() {
     super("page:model");
+
+    this.addEventListener("artist-filter:select", (event) => {
+      const { detail } = event as CustomEvent;
+      const { artist } = detail as { artist: String; };
+      this.selectedArtist = artist;
+    });
   }
 
   attributeChangedCallback(
@@ -168,18 +179,31 @@ export class PlaylistViewElement extends View<Model, Msg> {
 
     console.log(songs);
 
-    const songs_html = songs.map(
-      (s: any) =>
-        html`
-          <li>${s.title} ${s.artist}</li>
-        `
-    );
+    const renderArtists = () => {
+      if (this.selectedArtist) {
+        return songs.filter((s: any) => s.artist === this.selectedArtist)
+          .map(
+            (s: any) =>
+              html`
+              <li>${s.title} ${s.artist}</li>
+            `
+          );
+      } else {
+        return songs.map(
+          (s: any) =>
+            html`
+              <li>${s.title} ${s.artist}</li>
+            `
+        );
+      }
+    };
 
     return html`
+      <artist-filter></artist-filter>
       <playlist-viewer>
         <span slot="playlistid">${playlistid}</span>
         <ul slot="songs">
-          ${songs_html}
+          ${renderArtists()}
         </ul>
       </playlist-viewer>
     `;
