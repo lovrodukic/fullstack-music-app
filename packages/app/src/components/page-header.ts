@@ -1,10 +1,10 @@
-import { define, Auth, Observer, Events, DropdownElement } from "@calpoly/mustang";
+import { define, Auth, Observer, Events, Dropdown } from "@calpoly/mustang";
 import { LitElement, css, html } from "lit";
 import { property } from "lit/decorators.js";
 
 export class PageHeaderElement extends LitElement {
   static uses = define({
-    "drop-down": DropdownElement
+    "drop-down": Dropdown.Element
   });
 
   @property()
