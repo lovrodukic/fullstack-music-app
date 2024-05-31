@@ -181,7 +181,8 @@ export class PlaylistViewElement extends View<Model, Msg> {
 
     const renderArtists = () => {
       if (this.selectedArtist) {
-        return songs.filter((s: any) => s.artist === this.selectedArtist)
+        return songs.filter((s: any) => s.artist.toLocaleLowerCase() ===
+          this.selectedArtist?.toLocaleLowerCase())
           .map(
             (s: any) =>
               html`
