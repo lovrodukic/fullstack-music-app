@@ -6,6 +6,8 @@ import { Model, init } from "./model";
 import update from "./update";
 import { ProfileViewElement } from "./views/profile-view";
 import { PlaylistViewElement } from "./views/playlist-view";
+import { LandingViewElement } from "./views/landing-view";
+import { RegistrationViewElement } from "./views/registration-view.ts";
 
 const routes = [
   {
@@ -25,6 +27,18 @@ const routes = [
     view: (params: Switch.Params) => html`
       <playlist-view playlist-id=${params.id} owner-id=${params.owner}>
       </playlist-view>
+    `
+  },
+  {
+    path: "/app/register",
+    view: () => html`
+      <registration-view></registration-view>
+    `
+  },
+  {
+    path: "/app",
+    view: () => html`
+      <landing-view></landing-view>
     `
   },
   {
@@ -49,6 +63,8 @@ define({
       super(routes, "page:history");
     }
   },
+  "landing-view": LandingViewElement,
+  "registration-view": RegistrationViewElement,
   "profile-view": ProfileViewElement,
   "playlist-view": PlaylistViewElement,
   "page-header": PageHeaderElement

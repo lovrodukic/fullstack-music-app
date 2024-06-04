@@ -6,12 +6,12 @@ import tokens from "../css/tokens";
 
 define({ "restful-form": Rest.FormElement });
 
-export class LoginFormElement extends LitElement {
+export class SignupFormElement extends LitElement {
   render() {
     return html`
-      <restful-form new src="/auth/login">
+      <restful-form new src="/auth/register">
         <slot></slot>
-        <!-- <button type="submit" slot="submit">Submit</button> -->
+        <button slot="submit">Submit</button>
       </restful-form>
     `;
   }
@@ -53,7 +53,7 @@ export class LoginFormElement extends LitElement {
         const detail = (event as CustomEvent).detail;
         const { token } = detail.created;
         const redirect = this.next || "/";
-        console.log("Login successful", detail, redirect);
+        console.log("Signup successful", detail, redirect);
 
         Events.relay(event, "auth:message", [
           "auth/signin",

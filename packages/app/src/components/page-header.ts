@@ -1,6 +1,9 @@
 import { define, Auth, Observer, Events, Dropdown } from "@calpoly/mustang";
 import { LitElement, css, html } from "lit";
 import { property } from "lit/decorators.js";
+import page from "../css/page";
+import reset from "../css/reset";
+import tokens from "../css/tokens";
 
 export class PageHeaderElement extends LitElement {
   static uses = define({
@@ -8,15 +11,19 @@ export class PageHeaderElement extends LitElement {
   });
 
   @property()
-  username = "anonymous";
+  username?: string;
 
   render() {
     return html`
       <header>
-        <h1>My App</h1>
-        <drop-down>
+      <nav>
+        <a href="/app">Log In</a>
+        <a href="/app/profile/${this.username}">Profile</a>
+        <a href="/app/register">Register</a>
+      </nav>
+      <drop-down>
           <a href="#" slot="actuator">
-            <slot name="greeting">Hello, ${this.username}</slot></a>
+            <slot name="greeting">Hello, ${this.username}!</slot></a>
           <ul>
             <li>
               <label @change=${toggleLightMode}>
@@ -31,41 +38,35 @@ export class PageHeaderElement extends LitElement {
           </ul>
         </drop-down>
       </header>
+      <h1>Cool App</h1>
     `;
   }
 
-  static styles = css`
-    :host {
-      display: contents;
-    }
-    * {
-      margin: 0;
-      box-sizing: border-box;
-    }
-    header {
-      grid-column: start / end;
-      margin: 0 calc(-0.5);
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding: var(--size-spacing-med);
-      background-color: var(--color-page-background);
-      color: var(--color-text);
-    }
-    header a[href] {
-      color: var(--color--age-element);
-    }
-    h1 {
-      font-family: var(--font-family-main);
-      font-size: var(--size-type-xlarge);
-      font-style: oblique;
-      line-height: 1;
-    }
-    ul {
-      list-style: none;
-      padding: var(--size-spacing-med);
-    }
-  `;
+  static styles = [
+    page,
+    reset,
+    tokens,
+    css`
+      ul {
+        list-style: none;
+        padding: var(--size-spacing-medium);
+      }
+
+      h1 {
+        background: var(--color-button);
+      }
+      
+      li {
+        border-top: none;
+        border-bottom: none;
+        background: var(--color-page-background);
+        display: grid;
+        font-size: var(--size-type-small);
+        font-weight: normal;
+        margin: var(--size-spacing-large);
+      }
+    `
+  ];
 
   _authObserver = new Observer<Auth.Model>(
     this,

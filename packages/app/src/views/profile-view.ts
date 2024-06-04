@@ -1,11 +1,14 @@
 import { define, View, Form, InputArray, History } from "@calpoly/mustang";
-import { css, html, LitElement } from "lit";
+import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 // @ts-ignore
 import { Profile } from "server/models";
 import { ProfileAvatarElement } from "../components/profile-avatar";
 import { Msg } from "../messages";
 import { Model } from "../model";
+import page from "../css/page";
+import reset from "../css/reset";
+import tokens from "../css/tokens";
 
 class ProfileViewer extends LitElement {
   @property()
@@ -15,19 +18,49 @@ class ProfileViewer extends LitElement {
     return html`
       <section>
         <slot name="avatar"></slot>
-        <h1><slot name="name"></slot></h1>
-        <nav>
-          <a href="${this.username}/edit" class="edit">Edit</a>
-        </nav>
+        <div class="header-container">
+          <h2 class="profile"><slot name="name"></slot></h2>
+          <nav class="profile">
+            <a href="${this.username}/edit" class="edit">Edit</a>
+          </nav>
+        </div>
         <dl>
-          <dt>Bio</dt>
-          <dd><slot name="bio"></slot></dd>
-          <dt>Playlists</dt>
+          <h3 class="bio">Bio:</h3>
+          <h4 class="bio"><slot name="bio"></slot></h4>
+          <h3>Playlists:</h3>
           <dd><slot name="playlists"></slot></dd>
         </dl>
       </section>
     `;
   }
+
+  static styles = [
+    page,
+    reset,
+    tokens,
+    css`
+      h3 {
+        font-weight: bold;
+      }
+
+      h3.bio, h4.bio {
+        text-align: center
+      }
+
+      slot[name="avatar"] {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    `
+  ];
 }
 
 class ProfileEditor extends LitElement {
@@ -46,11 +79,13 @@ class ProfileEditor extends LitElement {
     return html`
       <section>
         <slot name="avatar"></slot>
-        <h1><slot name="name"></slot></h1>
-        <nav>
-          <a class="close" href="../${this.username}">Close</a>
-          <button class="delete">Delete</button>
-        </nav>
+        <div class="header-container">
+          <h1><slot name="name"></slot></h1>
+          <nav>
+            <a class="close" href="../${this.username}">Close</a>
+            <button class="delete">Delete</button>
+          </nav>
+        </div>
         <mu-form .init=${this.init}>
           <label>
             <span>Username</span>
@@ -74,6 +109,60 @@ class ProfileEditor extends LitElement {
       </section>
     `;
   }
+
+  static styles = [
+    page,
+    reset,
+    tokens,
+    css`
+      mu-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h3 {
+        font-weight: bold;
+      }
+
+      h3.bio, h4.bio {
+        text-align: center
+      }
+
+      slot[name="avatar"] {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      mu-form {
+        grid-column: key / end;
+      }
+      
+      mu-form input {
+        grid-column: input;
+      }
+
+      .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      button.delete {
+        grid-column: input;
+        justify-self: start;
+        padding: 5px;
+        margin: 0.5px;
+      }
+
+      button.remove {
+        justify-self: start;
+        padding: 5px;
+      }
+    `
+  ];
 }
 
 export class ProfileViewElement extends View<Model, Msg> {
@@ -126,7 +215,7 @@ export class ProfileViewElement extends View<Model, Msg> {
       playlists = []
     } = this.profile || {};
 
-    const playlists_html = playlists.map(
+    const playlistsHTML = playlists.map(
       (s: any) =>
         html`
           <li>
@@ -156,11 +245,33 @@ export class ProfileViewElement extends View<Model, Msg> {
           <span slot="name">${name}</span>
           <span slot="bio">${bio}</span>
           <ul slot="playlists">
-            ${playlists_html}
+            ${playlistsHTML}
           </ul>
         </profile-viewer>
     `;
   }
+
+  static styles = [
+    page,
+    reset,
+    tokens,
+    css`
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        margin-block-start: 0;
+        margin-block-end: 0;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        padding-inline-start: 0px;
+      }
+
+      a:hover {
+        color: var(--color-button);
+      }
+    `
+  ];
 
   _handleSubmit(event: Form.SubmitEvent<Profile>) {
     console.log("Handling submit of mu-form");
