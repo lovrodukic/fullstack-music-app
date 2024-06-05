@@ -11,7 +11,7 @@ export class SignupFormElement extends LitElement {
     return html`
       <restful-form new src="/auth/register">
         <slot></slot>
-        <button slot="submit">Submit</button>
+        <!-- <button slot="submit" type="submit">Submit</button> -->
       </restful-form>
     `;
   }

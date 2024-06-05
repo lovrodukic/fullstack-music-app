@@ -47,8 +47,18 @@ function get(title, artist) {
     throw `${title} by ${artist} Not Found`;
   });
 }
+function create(song) {
+  const s = new SongModel(song);
+  return SongModel.findOne({ title: s.title, artist: s.artist }).then((found) => {
+    if (!found)
+      return s.save();
+    else
+      return song;
+  });
+}
 var song_svc_default = {
   index,
   get,
+  create,
   Schema: songSchema
 };

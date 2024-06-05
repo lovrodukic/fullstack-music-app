@@ -23,4 +23,13 @@ router.get("/:title/:artist", (req: Request, res: Response) => {
     .catch((err) => res.status(404).end());
 });
 
+router.post("/", (req: Request, res: Response) => {
+  const newSong = req.body;
+
+  songs
+    .create(newSong)
+    .then((song: Song) => res.status(201).send(song))
+    .catch((err) => res.status(500).send(err));
+});
+
 export default router;

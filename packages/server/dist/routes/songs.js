@@ -46,4 +46,8 @@ router.get("/:title/:artist", (req, res) => {
       res.json(song);
   }).catch((err) => res.status(404).end());
 });
+router.post("/", (req, res) => {
+  const newSong = req.body;
+  import_song_svc.default.create(newSong).then((song) => res.status(201).send(song)).catch((err) => res.status(500).send(err));
+});
 var songs_default = router;

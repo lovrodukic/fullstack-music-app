@@ -46,4 +46,9 @@ router.get("/:id/:owner", (req, res) => {
       res.json(playlist);
   }).catch((err) => res.status(404).end());
 });
+router.put("/:id/:owner", (req, res) => {
+  const { id, owner } = req.params;
+  const newPlaylist = req.body;
+  import_playlist_svc.default.update(id, owner, newPlaylist).then((playlist) => res.json(playlist)).catch((err) => res.status(404).end());
+});
 var playlists_default = router;

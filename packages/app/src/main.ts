@@ -5,11 +5,25 @@ import { Msg } from "./messages";
 import { Model, init } from "./model";
 import update from "./update";
 import { ProfileViewElement } from "./views/profile-view";
+import { UsersViewElement } from "./views/users-view.ts";
 import { PlaylistViewElement } from "./views/playlist-view";
+import { SongViewElement } from "./views/song-view.ts";
 import { LandingViewElement } from "./views/landing-view";
 import { RegistrationViewElement } from "./views/registration-view.ts";
 
 const routes = [
+  {
+    path: "/app/songs",
+    view: () => html`
+      <song-view></song-view>
+    `
+  },
+  {
+    path: "/app/users",
+    view: () => html`
+      <users-view></users-view>
+    `
+  },
   {
     path: "/app/profile/:id",
     view: (params: Switch.Params) => html`
@@ -26,6 +40,13 @@ const routes = [
     path: "/app/playlist/:id/:owner",
     view: (params: Switch.Params) => html`
       <playlist-view playlist-id=${params.id} owner-id=${params.owner}>
+      </playlist-view>
+    `
+  },
+  {
+    path: "/app/playlist/:id/:owner/edit",
+    view: (params: Switch.Params) => html`
+      <playlist-view edit playlist-id=${params.id} owner-id=${params.owner}>
       </playlist-view>
     `
   },
@@ -65,7 +86,9 @@ define({
   },
   "landing-view": LandingViewElement,
   "registration-view": RegistrationViewElement,
+  "users-view": UsersViewElement,
   "profile-view": ProfileViewElement,
   "playlist-view": PlaylistViewElement,
+  "song-view": SongViewElement,
   "page-header": PageHeaderElement
 });

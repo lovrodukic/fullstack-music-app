@@ -53,8 +53,26 @@ function get(playlistid, ownerid) {
     throw err;
   });
 }
+function update(playlistid, ownerid, playlist) {
+  return PlaylistModel.findOne({ playlistid, owner: ownerid }).then((found) => {
+    if (!found)
+      throw `${playlistid} Not Found`;
+    else
+      return PlaylistModel.findByIdAndUpdate(
+        found._id,
+        playlist,
+        { new: true }
+      );
+  }).then((updated) => {
+    if (!updated)
+      throw `${playlistid} not updated`;
+    else
+      return updated;
+  });
+}
 var playlist_svc_default = {
   index,
   get,
+  update,
   Schema: playlistSchema
 };

@@ -237,7 +237,7 @@ export class ProfileViewElement extends View<Model, Msg> {
         event: Form.SubmitEvent<Profile>
       ) => this._handleSubmit(event)}>
             ${fields}
-          </profile-editor>
+        </profile-editor>
       `
       : html`
         <profile-viewer username=${userid}>

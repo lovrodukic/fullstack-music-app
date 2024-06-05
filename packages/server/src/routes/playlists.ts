@@ -23,4 +23,14 @@ router.get("/:id/:owner", (req: Request, res: Response) => {
     .catch((err) => res.status(404).end());
 });
 
+router.put("/:id/:owner", (req: Request, res: Response) => {
+  const { id, owner } = req.params;
+  const newPlaylist = req.body;
+
+  playlists
+    .update(id, owner, newPlaylist)
+    .then((playlist: Playlist) => res.json(playlist))
+    .catch((err) => res.status(404).end());
+});
+
 export default router;

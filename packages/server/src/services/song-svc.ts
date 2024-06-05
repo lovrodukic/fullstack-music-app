@@ -32,8 +32,19 @@ function get(title: String, artist: String): Promise<Song> {
     });
 }
 
+function create(song: Song): Promise<Song> {
+  const s = new SongModel(song);
+
+  return SongModel.findOne({ title: s.title, artist: s.artist })
+    .then((found) => {
+      if (!found) return s.save();
+      else return song as Song;
+    });
+}
+
 export default {
   index,
   get,
+  create,
   Schema: songSchema
 };

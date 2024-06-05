@@ -26,11 +26,6 @@ function index(): Promise<Playlist[]> {
 }
 
 function get(playlistid: String, ownerid: String): Promise<Playlist> {
-  // return PlaylistModel.find({ playlistid, ownerid })
-  //   .then((list) => list[0])
-  //   .catch((err) => {
-  //     throw `Playlist "${playlistid} by ${ownerid}" Not Found`;
-  //   });
   return PlaylistModel.findOne({ playlistid: playlistid, owner: ownerid })
     .then((playlist) => {
       if (!playlist) {
@@ -43,8 +38,30 @@ function get(playlistid: String, ownerid: String): Promise<Playlist> {
     });
 }
 
+function update(
+  playlistid: String,
+  ownerid: String,
+  playlist: Playlist
+): Promise<Playlist> {
+  return PlaylistModel.findOne({ playlistid: playlistid, owner: ownerid })
+    .then((found) => {
+      if (!found) throw `${playlistid} Not Found`;
+      else
+        return PlaylistModel.findByIdAndUpdate(
+          found._id,
+          playlist,
+          { new: true }
+        );
+    })
+    .then((updated) => {
+      if (!updated) throw `${playlistid} not updated`;
+      else return updated as Playlist;
+    });
+}
+
 export default {
   index,
   get,
+  update,
   Schema: playlistSchema
 };

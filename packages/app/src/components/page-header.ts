@@ -16,12 +16,13 @@ export class PageHeaderElement extends LitElement {
   render() {
     return html`
       <header>
-      <nav>
-        <a href="/app">Log In</a>
-        <a href="/app/profile/${this.username}">Profile</a>
-        <a href="/app/register">Register</a>
-      </nav>
-      <drop-down>
+        <nav>
+          <a href="/app">Log In</a>
+          <a href="/app/profile/${this.username}">Profile</a>
+          <a href="/app/users">Users</a>
+          <a href="/app/songs">Explore ♬</a>
+        </nav>
+        <drop-down>
           <a href="#" slot="actuator">
             <slot name="greeting">Hello, ${this.username}!</slot></a>
           <ul>
@@ -38,7 +39,7 @@ export class PageHeaderElement extends LitElement {
           </ul>
         </drop-down>
       </header>
-      <h1>Cool App</h1>
+      <h1>♫ GrooveShare ♫</h1>
     `;
   }
 
@@ -52,18 +53,24 @@ export class PageHeaderElement extends LitElement {
         padding: var(--size-spacing-medium);
       }
 
+      ul > li {
+        margin: 0px;
+        padding: var(--size-spacing-medium);
+        border-top: none;
+        border-bottom: none;
+      }
+
       h1 {
         background: var(--color-button);
+        font-style: italic;
       }
       
       li {
-        border-top: none;
-        border-bottom: none;
         background: var(--color-page-background);
         display: grid;
         font-size: var(--size-type-small);
         font-weight: normal;
-        margin: var(--size-spacing-large);
+        margin: 0px;
       }
     `
   ];
