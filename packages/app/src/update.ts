@@ -50,7 +50,7 @@ export default function update(
 
     case "playlist/save":
       savePlaylist(message[1], user)
-        .then((profile) => apply((model) => ({ ...model, profile })))
+        .then((playlist) => apply((model) => ({ ...model, playlist })))
         .then(() => {
           const { onSuccess } = message[1];
           if (onSuccess) onSuccess();
