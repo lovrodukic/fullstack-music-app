@@ -12,3 +12,5 @@ Refer to README in `/packages/app` for documentation on parts C1-C5
 
 ## Final Project
 Use `npm run dev` in `/packages/server` and `/packages/app` to start the app
+Note: I cannot log in to my `unbundled.dev` so the deployed app there is NOT
+      the final version of my app.
