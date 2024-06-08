@@ -34,7 +34,7 @@ export class PageHeaderElement extends LitElement {
             </li>
             <li>
               <a
-                href="#" @click=${signOutUser}>Sign out</a>
+                href="/app" @click=${signOutUser}>Sign out</a>
             </li>
           </ul>
         </drop-down>

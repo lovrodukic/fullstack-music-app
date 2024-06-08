@@ -96,6 +96,10 @@ class ProfileEditor extends LitElement {
             <input name="name" />
           </label>
           <label>
+            <span>Bio</span>
+            <input name="bio" />
+          </label>
+          <label>
             <span>Playlists</span>
             <input-array name="playlists">
               <span slot="label-add">Add a playlist</span>

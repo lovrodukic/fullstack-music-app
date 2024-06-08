@@ -21,6 +21,9 @@ class PlaylistViewer extends LitElement {
           <h2><slot name="playlistid"></slot></h2>
           <h2><artist-filter></artist-filter></h2>
         </div>
+        <div class="header-container2">
+          <h3>Title:</h3><h3>Artist:</h3>
+        </div>
         <dl>
           <dd><slot name="songs"></slot></dd>
         </dl>
@@ -47,6 +50,12 @@ class PlaylistViewer extends LitElement {
       .header-container {
         display: flex;
         align-items: center;
+      }
+
+      .header-container2 {
+        display: flex;
+        align-items: center;
+        gap: 255px;
       }
     `
   ];
