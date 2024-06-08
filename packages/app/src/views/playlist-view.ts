@@ -1,4 +1,4 @@
-import { define, View, Form, InputArray, History } from "@calpoly/mustang";
+import { define, View } from "@calpoly/mustang";
 import { html, css, LitElement } from "lit";
 import { property, state } from "lit/decorators.js";
 // @ts-ignore
@@ -61,109 +61,108 @@ class PlaylistViewer extends LitElement {
   ];
 }
 
-class PlaylistEditor extends LitElement {
-  static uses = define({
-    "mu-form": Form.Element,
-    "input-array": InputArray.Element
-  });
+// class PlaylistEditor extends LitElement {
+//   static uses = define({
+//     "mu-form": Form.Element,
+//     "input-array": InputArray.Element
+//   });
 
-  @property({ attribute: "playlist-id", reflect: true })
-  name = "";
+//   @property({ attribute: "playlist-id", reflect: true })
+//   name = "";
 
-  @property({ attribute: "owner-id", reflect: true })
-  owner = "";
+//   @property({ attribute: "owner-id", reflect: true })
+//   owner = "";
 
-  @property({ attribute: false })
-  init?: Playlist;
+//   @property({ attribute: false })
+//   init?: Playlist;
 
-  render() {
-    return html`
-      <section>
-        <div class="header-container">
-          <h1><slot name="name"></slot></h1>
-          <nav>
-            <a class="close" href="../${this.name}/${this.owner}">
-              Close
-            </a>
-            <button class="delete">Delete</button>
-          </nav>
-        </div>
-        <mu-form .init=${this.init}>
-          <label>
-            <span>Songs</span>
-            <input-array name="songs">
-              <span slot="label-add">Add a song</span>
-            </input-array>
-          </label>
-        </mu-form>
-      </section>
-    `;
-  }
+//   render() {
+//     return html`
+//       <section>
+//         <div class="header-container">
+//           <h1><slot name="name"></slot></h1>
+//           <nav>
+//             <a class="close" href="../${this.name}/${this.owner}">
+//               Close
+//             </a>
+//             <button class="delete">Delete</button>
+//           </nav>
+//         </div>
+//         <mu-form .init=${this.init}>
+//           <label>
+//             <span>Songs</span>
+//             <input-array name="songs">
+//               <span slot="label-add">Add a song</span>
+//             </input-array>
+//           </label>
+//         </mu-form>
+//       </section>
+//     `;
+//   }
 
-  static styles = [
-    page,
-    reset,
-    tokens,
-    css`
-      mu-form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+//   static styles = [
+//     page,
+//     reset,
+//     tokens,
+//     css`
+//       mu-form {
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//       }
 
-      h3 {
-        font-weight: bold;
-      }
+//       h3 {
+//         font-weight: bold;
+//       }
 
-      h3.bio, h4.bio {
-        text-align: center
-      }
+//       h3.bio, h4.bio {
+//         text-align: center
+//       }
 
-      slot[name="avatar"] {
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+//       slot[name="avatar"] {
+//         padding: 20px;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//       }
 
-      mu-form {
-        grid-column: key / end;
-      }
-      
-      mu-form input {
-        grid-column: input;
-      }
+//       mu-form {
+//         grid-column: key / end;
+//       }
 
-      .header-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+//       mu-form input {
+//         grid-column: input;
+//       }
 
-      button.delete {
-        grid-column: input;
-        justify-self: start;
-        padding: 5px;
-        margin: 0.5px;
-      }
+//       .header-container {
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//       }
 
-      button.remove {
-        justify-self: start;
-        padding: 5px;
-      }
+//       button.delete {
+//         grid-column: input;
+//         justify-self: start;
+//         padding: 5px;
+//         margin: 0.5px;
+//       }
 
-      nav {
-        margin: 8px;
-      }
-    `
-  ];
-}
+//       button.remove {
+//         justify-self: start;
+//         padding: 5px;
+//       }
+
+//       nav {
+//         margin: 8px;
+//       }
+//     `
+//   ];
+// }
 
 export class PlaylistViewElement extends View<Model, Msg> {
   static uses = define({
     "playlist-viewer": PlaylistViewer,
-    "artist-filter": ArtistFilter,
-    "playlist-editor": PlaylistEditor
+    "artist-filter": ArtistFilter
   });
 
   @property({ type: Boolean, reflect: true })
@@ -251,18 +250,7 @@ export class PlaylistViewElement extends View<Model, Msg> {
       );
     };
 
-    return this.edit
-      ? html`
-        <playlist-editor
-            name=${playlistid}
-            owner=${this.ownerid}
-            .init=${this.playlist}
-            @mu-form:submit=${(
-        event: Form.SubmitEvent<Playlist>
-      ) => this._handleSubmit(event)}>
-          </playlist-editor>
-      `
-      : html`
+    return html`
         <nav class="profile">
           <a href="/app/playlist/${playlistid}/${this.ownerid}/edit"
             class="edit">
@@ -293,20 +281,20 @@ export class PlaylistViewElement extends View<Model, Msg> {
     `
   ];
 
-  _handleSubmit(event: Form.SubmitEvent<Playlist>) {
-    console.log("Handling submit of mu-form");
-    this.dispatchMessage([
-      "playlist/save",
-      {
-        playlistid: this.playlistid,
-        ownerid: this.ownerid,
-        onSuccess: () =>
-          History.dispatch(this, "history/navigate", {
-            href: `/app/playlist/${this.playlistid}/${this.ownerid}`
-          }),
-        onFailure: (error: Error) =>
-          console.log("ERROR:", error)
-      }
-    ]);
-  }
+  // _handleSubmit(event: Form.SubmitEvent<Playlist>) {
+  //   console.log("Handling submit of mu-form");
+  //   this.dispatchMessage([
+  //     "playlist/save",
+  //     {
+  //       playlistid: this.playlistid,
+  //       ownerid: this.ownerid,
+  //       onSuccess: () =>
+  //         History.dispatch(this, "history/navigate", {
+  //           href: `/app/playlist/${this.playlistid}/${this.ownerid}`
+  //         }),
+  //       onFailure: (error: Error) =>
+  //         console.log("ERROR:", error)
+  //     }
+  //   ]);
+  // }
 }
