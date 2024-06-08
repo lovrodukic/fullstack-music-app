@@ -258,7 +258,8 @@ export class PlaylistViewElement extends View<Model, Msg> {
             owner=${this.ownerid}
             .init=${this.playlist}
             @mu-form:submit=${(
-        ) => this._handleSubmit()}>
+        event: Form.SubmitEvent<Playlist>
+      ) => this._handleSubmit(event)}>
           </playlist-editor>
       `
       : html`
@@ -292,7 +293,7 @@ export class PlaylistViewElement extends View<Model, Msg> {
     `
   ];
 
-  _handleSubmit() {
+  _handleSubmit(event: Form.SubmitEvent<Playlist>) {
     console.log("Handling submit of mu-form");
     this.dispatchMessage([
       "playlist/save",
