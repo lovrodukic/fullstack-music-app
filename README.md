@@ -11,4 +11,4 @@ Refer to README in `/packages/server` for documentation on parts B1-B8
 Refer to README in `/packages/app` for documentation on parts C1-C5
 
 ## Final Project
-Use `npm run dev` in `/packages/app` and `/packages/proto` to start the app
+Use `npm run dev` in `/packages/server` and `/packages/app` to start the app
